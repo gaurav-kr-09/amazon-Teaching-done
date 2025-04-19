@@ -697,6 +697,40 @@ const products = [
       "apparel",
       "mens"
     ]
-  }
+  },
+
+  {
+    id: "id1",
+    image: "images/products/backpack.jpg",
+    name: "black backpack for general use",
+    rating: {
+      stars: 3.5,
+      count: 1500,
+    },
+    priceCents: 799,
+    keywords: [
+      "backpack",
+      "carry bag",
+      "laptop bag",
+      "handy bag"
+    ]
+  },
   
+  {
+    id: "id2",
+    image: "images/products/umbrella.jpg",
+    name: "black umberlla for everyone",
+    rating: {
+      stars: 4,
+      count: 1692,
+    },
+    priceCents: 499,
+    keywords: [
+      "umbrella",
+      "black umbrella",
+      "sunlight",
+      "rain"
+    ]
+  },
+
 ];
