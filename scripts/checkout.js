@@ -1,6 +1,7 @@
 import { cart, removeFromCart, updateCartQuantity, saveToStorage } from '../data/cart.js'
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { findContainer } from './utils/containerFinder.js';
 
 let cartsummaryHTML = '';
 
@@ -123,7 +124,7 @@ document.querySelector('.js-order-summary')
 document.querySelectorAll('.js-delete-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
-      const {productId} = link.dataset;
+      const { productId } = link.dataset;
       removeFromCart(productId);
 
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
@@ -131,19 +132,30 @@ document.querySelectorAll('.js-delete-link')
   })
 })
 
+function updateQuantityLabel(link, productId, newQuantity){
+  const container = findContainer(link);
+
+  if(newQuantity <= 0){
+    removeFromCart(productId);
+    container.remove();
+  }else{
+    const cartItem = cart.find(item => item.productId === productId);
+    if (cartItem) {
+      cartItem.quantity = newQuantity;
+    }
+    container.querySelector('.quantity-label').innerText = newQuantity;
+  }
+
+}
+
 document.querySelectorAll('.js-update-quantity-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
-      const { productId } = link.dataset;
-      const container = document.querySelector(`.js-cart-item-container-${productId}`);
-
+      const container = findContainer(link);
 
       container.querySelector('.js-save-quantity-link').classList.add('is-editing-quantity');
-
       container.querySelector('.quantity-input').classList.add('is-editing-quantity');
-
       container.querySelector('.js-update-quantity-link').classList.add('hide-quantityNupdate');
-
       container.querySelector('.quantity-label').classList.add('hide-quantityNupdate');
 
     });
@@ -152,28 +164,14 @@ document.querySelectorAll('.js-update-quantity-link')
 document.querySelectorAll('.js-save-quantity-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
-      const {productId} = link.dataset;
-      const container = document.querySelector(`.js-cart-item-container-${productId}`);
+      const { productId } = link.dataset;
+      const container = findContainer(link);
 
-      const newQuantity = Number(container.querySelector('.quantity-input').value);
-
-      if(newQuantity <= 0){
-        removeFromCart(productId);
-        container.remove();
-      }else{
-        const cartItem = cart.find(item => item.productId === productId);
-        if (cartItem) {
-          cartItem.quantity = newQuantity;
-        }
-        container.querySelector('.quantity-label').innerText = newQuantity;
-      }
+      updateQuantityLabel(link, productId, Number(container.querySelector('.quantity-input').value));
 
       container.querySelector('.js-save-quantity-link').classList.remove('is-editing-quantity');
-
       container.querySelector('.quantity-input').classList.remove('is-editing-quantity');
-
       container.querySelector('.js-update-quantity-link').classList.remove('hide-quantityNupdate');
-
       container.querySelector('.quantity-label').classList.remove('hide-quantityNupdate');
 
       document.querySelector('.js-return-to-home-link')
