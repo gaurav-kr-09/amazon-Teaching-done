@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateCartQuantity, saveToStorage } from '../data/cart.js'
+import { cart, removeFromCart, updateCartQuantity, saveToStorage, updateDeliveryOption } from '../data/cart.js'
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { findContainer } from './utils/containerFinder.js';    //named export
@@ -36,7 +36,7 @@ const dateString = deliveryDate.format('dddd, MMMM D');
   <div class="cart-item-container
   js-cart-item-container-${matchingproduct.id}">
     <div class="delivery-date">
-      Delivery date: ${dateString};
+      Delivery date: ${dateString}
     </div>
 
     <div class="cart-item-details-grid">
@@ -99,7 +99,9 @@ function deliveryOptionHTML(matchingproduct, cartItem){
 
     html +=
     `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+      data-product-id = "${matchingproduct.id}"
+      data-delivery-option-id = "${deliveryOption.id}">
           <input type="radio"
             ${isChecked ? 'checked': ''}
             class="delivery-option-input"
@@ -199,3 +201,12 @@ document.querySelectorAll('.quantity-input')
       }
     })
   })
+
+document.querySelectorAll('.js-delivery-option')
+  .forEach((element) => {
+    element.addEventListener('click', () =>{
+      const {productId, deliveryOptionId} = element.dataset;
+      updateDeliveryOption(productId, deliveryOptionId);
+    })
+  })
+
