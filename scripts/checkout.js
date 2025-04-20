@@ -148,6 +148,23 @@ function updateQuantityLabel(link, productId, newQuantity){
 
 }
 
+function saveQuantity(link){
+  const { productId } = link.dataset;
+  const container = findContainer(link);
+
+  updateQuantityLabel(link, productId, Number(container.querySelector('.quantity-input').value));
+
+  container.querySelector('.js-save-quantity-link').classList.remove('is-editing-quantity');
+  container.querySelector('.quantity-input').classList.remove('is-editing-quantity');
+  container.querySelector('.js-update-quantity-link').classList.remove('hide-quantityNupdate');
+  container.querySelector('.quantity-label').classList.remove('hide-quantityNupdate');
+
+  document.querySelector('.js-return-to-home-link')
+    .innerHTML = updateCartQuantity();
+
+  saveToStorage();
+}
+
 document.querySelectorAll('.js-update-quantity-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
@@ -163,21 +180,18 @@ document.querySelectorAll('.js-update-quantity-link')
 
 document.querySelectorAll('.js-save-quantity-link')
   .forEach((link) => {
-    link.addEventListener('click', () => {
-      const { productId } = link.dataset;
-      const container = findContainer(link);
+    link.addEventListener('click', () => saveQuantity(link));
+});
 
-      updateQuantityLabel(link, productId, Number(container.querySelector('.quantity-input').value));
-
-      container.querySelector('.js-save-quantity-link').classList.remove('is-editing-quantity');
-      container.querySelector('.quantity-input').classList.remove('is-editing-quantity');
-      container.querySelector('.js-update-quantity-link').classList.remove('hide-quantityNupdate');
-      container.querySelector('.quantity-label').classList.remove('hide-quantityNupdate');
-
-      document.querySelector('.js-return-to-home-link')
-        .innerHTML = updateCartQuantity();
-
-      saveToStorage();
+document.querySelectorAll('.quantity-input')
+  .forEach((input) => {
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter'){
+        const container = input.closest('.cart-item-container');
+        const link = container.querySelector('.js-save-quantity-link');
+        saveQuantity(link);
+      }
     })
-  });
+  })
 
+  
