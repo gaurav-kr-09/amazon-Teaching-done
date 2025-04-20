@@ -128,6 +128,8 @@ export function renderOrderSumary() {
 
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
+
+        renderPaymentSummary();
     })
   })
 
@@ -160,6 +162,8 @@ export function renderOrderSumary() {
 
     document.querySelector('.js-return-to-home-link')
       .innerHTML = updateCartQuantity();
+
+    renderPaymentSummary();
 
     saveToStorage();
   }
@@ -200,6 +204,7 @@ export function renderOrderSumary() {
         updateDeliveryOption(productId, deliveryOptionId);
 
         renderOrderSumary();
+        renderPaymentSummary();
       });
     });
 }
