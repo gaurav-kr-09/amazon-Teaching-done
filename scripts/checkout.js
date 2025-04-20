@@ -38,9 +38,16 @@ cart.forEach((cartItem) => {
           <span>
             Quantity: <span class="quantity-label">${cartItem.quantity}</span>
           </span>
-          <span class="update-quantity-link link-primary">
+          <span class="update-quantity-link link-primary js-update-quantity-link"
+          data-product-id = ${matchingproduct.id}>
             Update
           </span>
+
+          <input type="number" min="0" class="quantity-input">
+          <span class="save-quantity-link link-primary js-save-quantity-link"
+          data-product-id = ${matchingproduct.id}>
+          Save</span>
+        
           <span class="delete-quantity-link link-primary js-delete-link"
           data-product-id = ${matchingproduct.id}>
             Delete
@@ -124,3 +131,38 @@ document.querySelectorAll('.js-delete-link')
       container.remove();
   })
 })
+
+document.querySelectorAll('.js-update-quantity-link')
+  .forEach((link) => {
+    link.addEventListener('click', () => {
+      const { productId } = link.dataset;
+      const container = document.querySelector(`.js-cart-item-container-${productId}`);
+
+
+      container.querySelector('.js-save-quantity-link').classList.add('is-editing-quantity');
+
+      container.querySelector('.quantity-input').classList.add('is-editing-quantity');
+
+      container.querySelector('.js-update-quantity-link').classList.add('hide-quantityNupdate');
+
+      container.querySelector('.quantity-label').classList.add('hide-quantityNupdate');
+
+    });
+})
+
+document.querySelectorAll('.js-save-quantity-link')
+  .forEach((link) => {
+    link.addEventListener('click', () => {
+      const {productId} = link.dataset;
+      const container = document.querySelector(`.js-cart-item-container-${productId}`);
+
+      container.querySelector('.js-save-quantity-link').classList.remove('is-editing-quantity');
+
+      container.querySelector('.quantity-input').classList.remove('is-editing-quantity');
+
+      container.querySelector('.js-update-quantity-link').classList.remove('hide-quantityNupdate');
+
+      container.querySelector('.quantity-label').classList.remove('hide-quantityNupdate');
+
+    })
+  });
