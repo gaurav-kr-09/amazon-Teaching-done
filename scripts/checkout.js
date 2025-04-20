@@ -110,7 +110,6 @@ cart.forEach((cartItem) => {
 
 document.querySelector('.js-return-to-home-link')
   .innerHTML = updateCartQuantity();
-  
 
 document.querySelector('.js-order-summary')
   .innerHTML = cartsummaryHTML;
