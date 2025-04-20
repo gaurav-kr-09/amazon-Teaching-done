@@ -1,7 +1,6 @@
-import { cart, removeFromCart } from '../data/cart.js'
+import { cart, removeFromCart, updateCartQuantity, saveToStorage } from '../data/cart.js'
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import { updateCartQuantity } from '../data/cart.js';
 
 let cartsummaryHTML = '';
 
@@ -156,6 +155,19 @@ document.querySelectorAll('.js-save-quantity-link')
       const {productId} = link.dataset;
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
 
+      const newQuantity = Number(container.querySelector('.quantity-input').value);
+
+      if(newQuantity <= 0){
+        removeFromCart(productId);
+        container.remove();
+      }else{
+        const cartItem = cart.find(item => item.productId === productId);
+        if (cartItem) {
+          cartItem.quantity = newQuantity;
+        }
+        container.querySelector('.quantity-label').innerText = newQuantity;
+      }
+
       container.querySelector('.js-save-quantity-link').classList.remove('is-editing-quantity');
 
       container.querySelector('.quantity-input').classList.remove('is-editing-quantity');
@@ -164,5 +176,10 @@ document.querySelectorAll('.js-save-quantity-link')
 
       container.querySelector('.quantity-label').classList.remove('hide-quantityNupdate');
 
+      document.querySelector('.js-return-to-home-link')
+        .innerHTML = updateCartQuantity();
+
+      saveToStorage();
     })
   });
+
