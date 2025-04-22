@@ -1,9 +1,8 @@
 import { cart, removeFromCart, updateCartQuantity, saveToStorage, updateDeliveryOption } from '../../data/cart.js'
 import { products,getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
-import { findContainer } from '../utils/containerFinder.js';    //named export
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';   //default export
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOption.js';
+import { findContainer } from '../utils/containerFinder.js';  //named export
+import { deliveryOptions, getDeliveryOption, calculateDeliveryDate } from '../../data/deliveryOption.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSumary() {
@@ -19,9 +18,7 @@ export function renderOrderSumary() {
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-    const dateString = deliveryDate.format('dddd, MMMM D');
+    const dateString = calculateDeliveryDate(deliveryOption);
 
     cartsummaryHTML += `
     <div class="cart-item-container
@@ -80,9 +77,8 @@ export function renderOrderSumary() {
     let html = '';
 
     deliveryOptions.forEach((deliveryOption) => {
-      const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-      const dateString = deliveryDate.format('dddd, MMMM D');
+      
+      const dateString = calculateDeliveryDate(deliveryOption);
 
       const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)} - `;
 
