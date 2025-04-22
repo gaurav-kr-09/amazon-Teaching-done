@@ -30,7 +30,18 @@ export function getDeliveryOption (deliveryOptionId) {
 
 export function calculateDeliveryDate(deliveryOption){
   const today = dayjs();
-  const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+  let daysToAdd = deliveryOption.deliveryDays;
+  let deliveryDate = today;
+  
+  while(daysToAdd > 0){
+    deliveryDate = deliveryDate.add(1, 'days');
+    const dayOfweek = deliveryDate.day();  //0 = sunday, 6 = saturday;
+
+    if(dayOfweek != 0 && dayOfweek != 6){
+      daysToAdd --;
+    }
+  }
+  
   const dateString = deliveryDate.format('dddd, MMMM D');
 
   return dateString;
