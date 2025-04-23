@@ -60,7 +60,7 @@ export function renderOrderSumary() {
           </div>
         </div>
 
-        <div class="delivery-options">
+        <div class="delivery-options ">
           <div class="delivery-options-title">
             Choose a delivery option:
           </div>
@@ -87,12 +87,12 @@ export function renderOrderSumary() {
 
       html +=
       `
-        <div class="delivery-option js-delivery-option"
+        <div class="delivery-option js-delivery-option js-delivery-option-${matchingproduct.id}-${deliveryOption.id}"
         data-product-id = "${matchingproduct.id}"
         data-delivery-option-id = "${deliveryOption.id}">
             <input type="radio"
               ${isChecked ? 'checked': ''}
-              class="delivery-option-input"
+              class="delivery-option-input js-delivery-option-input-${matchingproduct.id}-${deliveryOption.id}"
               name="delivery-option-${matchingproduct.id}">
 
             <div>
