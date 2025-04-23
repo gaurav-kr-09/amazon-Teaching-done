@@ -32,7 +32,7 @@ export function renderOrderSumary() {
           src="${matchingproduct.image}">
 
           <div class="cart-item-details">
-          <div class="product-name">
+          <div class="product-name js-product-name">
             ${matchingproduct.name}
           </div>
           <div class="product-price">
