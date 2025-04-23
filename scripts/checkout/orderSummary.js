@@ -14,7 +14,8 @@ export function renderOrderSumary() {
 
     const matchingproduct = getProduct(productId);
 
-    const deliveryOptionId = cartItem.deliveryOptionId;
+    const deliveryOptionId = cartItem.deliveryOptionId || '3';
+    cartItem.deliveryOptionId = deliveryOptionId;
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
