@@ -106,16 +106,16 @@
 // //-------->>>>>>> using an constructor <<<<<<--------;
 
 class Cart {
-	cartItems; // same as cartItems= undefined;
-	localStorageKey;
+	cartItems; // same as cartItems= undefined; //public property can be accessed anywhere.
+	#localStorageKey; //private class can only be used inside the class not outside the class.
 
 	constructor(localStorageKey) {
-		this.localStorageKey = localStorageKey;
-		this.loadFromStorage();
+		this.#localStorageKey = localStorageKey;
+		this.#loadFromStorage();
 	}
 
-	loadFromStorage () {
-		this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+	#loadFromStorage () {
+		this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
 		if (!this.cartItems) {
 			this.cartItems = [{
@@ -132,7 +132,7 @@ class Cart {
 	}
 
 	saveToStorage () {
-		localStorage.setItem(this.ocalStorageKey, JSON.stringify(this.cartItems));
+		localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
 	}
 
 	addToCart(productId, quantity = 1){
@@ -201,7 +201,7 @@ class Cart {
 const cart = new Cart('cart-oop');
 const buisnessCart = new Cart('cart-buisness');
 
-
+// cart.#localStorageKey = 'test'; //Error dega kyuki ye private hai.
 
 console.log(cart);
 console.log(buisnessCart);
