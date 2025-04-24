@@ -12,17 +12,17 @@ export function getProduct(productId){
   return matchingproduct;
 }
 
-class product {
+class Product {
   id;
   image;
   name;
   rating;
   priceCents;
 
-  constructor(productDetails) { //this is called converting an object in class.
+  // niche jo kr rhe hai usko kahte hai, converting an object in class.
+  constructor(productDetails) {
     this.id = productDetails.id;
     this.image = productDetails.image;
-    this.name = productDetails.name;
     this.name = productDetails.name;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
@@ -36,9 +36,13 @@ class product {
     return `$${formatCurrency(this.priceCents)}`;
   }
 
+  extraInfoHTML() {
+    return '';
+  }
+
 }
 
-//const product1 = new product();
+//const product1 = new Product();
 // // now we can set propertiesin this way Also.
 // product1.id = 'dsbjd'
 // product1.image = '';
@@ -64,6 +68,45 @@ class product {
 // });
 
 // //we used this as a sample aab pure cart k liye hamlog ye kam map function se kar lenge 
+
+class Clothing extends Product { //isse ek 'Clothing' class banega joki 'Product' class ka sara property inherit kar lega.
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails); 
+    // isse parent class ka constructor call ho jayega and wah aka value yaha v set ho jayega.
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  extraInfoHTML() {
+    //super.extraInfoHTML(); //isse v kam kr sakte hai niche wala. isse ham parent constructor ka ek method use kar sakte hai.
+    
+    return `
+    <a href="${this.sizeChartLink}" target= "_blank"  >Size Chart</a>
+    `;
+  }
+}
+
+// const tshirt = new Clothing({
+//   id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
+//   image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
+//   name: "Adults Plain Cotton T-Shirt - 2 Pack",
+//   rating: {
+//     stars: 4.5,
+//     count: 56
+//   },
+//   priceCents: 799,
+//   keywords: [
+//     "tshirts",
+//     "apparel",
+//     "mens"
+//   ],
+//   type: "clothing",
+//   sizeChartLink: "images/clothing-size-chart.png"
+// });
+
+// console.log(tshirt);
+// console.log(tshirt.getPrice());
 
 export const products = [
   {
@@ -801,5 +844,8 @@ export const products = [
   },
 
 ].map((productDetails) => {
-  return new product(productDetails);
+  if (productDetails.type === 'clothing'){
+    return new Clothing(productDetails);
+  }
+  return new Product(productDetails);
 });
