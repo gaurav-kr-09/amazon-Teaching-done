@@ -12,7 +12,7 @@ export function getProduct(productId){
   return matchingproduct;
 }
 
-class Product {
+export class Product {
   id;
   image;
   name;
@@ -69,7 +69,7 @@ class Product {
 
 // //we used this as a sample aab pure cart k liye hamlog ye kam map function se kar lenge 
 
-class Clothing extends Product { //isse ek 'Clothing' class banega joki 'Product' class ka sara property inherit kar lega.
+export class Clothing extends Product { //isse ek 'Clothing' class banega joki 'Product' class ka sara property inherit kar lega.
   sizeChartLink;
 
   constructor(productDetails) {
@@ -153,7 +153,7 @@ const object3 ={
 object3.method(); //Undefined
 */
 
-class Appliances extends Product{
+export class Appliances extends Product{
   instructionLink;
   warrantyLink;
 
