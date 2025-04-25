@@ -153,6 +153,25 @@ const object3 ={
 object3.method(); //Undefined
 */
 
+class Appliances extends Product{
+  instructionLink;
+  warrantyLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.instructionLink = productDetails.instructionLink;
+    this.warrantyLink = productDetails.warrantyLink;
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.warrantyLink}" target= "_blank"  >Warranty</a>
+    <a href="${this.instructionLink}" target= "_blank"  >Instructions</a>
+    `;
+  }
+
+}
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -216,7 +235,10 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliances",
+    warrantyLink: "images/appliance-warranty.png",
+    instructionLink: "images/appliance-instructions.png",
   },
 
   {
@@ -413,7 +435,10 @@ export const products = [
       "water boiler",
       "appliances",
       "kitchen"
-    ]
+    ],
+    type: "appliances",
+    warrantyLink: "images/appliance-warranty.png",
+    instructionLink: "images/appliance-instructions.png",
   },
 
   {
@@ -737,7 +762,10 @@ export const products = [
       "coffeemakers",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliances",
+    warrantyLink: "images/appliance-warranty.png",
+    instructionLink: "images/appliance-instructions.png",
   },
 
   {
@@ -801,7 +829,10 @@ export const products = [
       "food blenders",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliances",
+    warrantyLink: "images/appliance-warranty.png",
+    instructionLink: "images/appliance-instructions.png",
   },
   
   {
@@ -891,6 +922,9 @@ export const products = [
 ].map((productDetails) => {
   if (productDetails.type === 'clothing'){
     return new Clothing(productDetails);
+  }
+  if (productDetails.type === 'appliances'){
+    return new Appliances(productDetails);
   }
   return new Product(productDetails);
 });
