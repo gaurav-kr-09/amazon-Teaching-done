@@ -108,6 +108,51 @@ class Clothing extends Product { //isse ek 'Clothing' class banega joki 'Product
 // console.log(tshirt);
 // console.log(tshirt.getPrice());
 
+/* // Using builtin class to find the date 
+const date = new Date();
+console.log(date);
+console.log(typeof date);
+
+console.log(date.toLocaleTimeString());
+console.log(typeof date.toLocaleTimeString()); */
+
+
+/* //SOME DETAILS ABOUT 'this' feature. 
+
+console.log(this); //it will give undefined  
+
+const object2 = {
+  a: 2,
+  b: this.a // this to apne bap yani  jaha rhta hai usse ek upar wale object ko point karta hai but yaha pe
+  // objeect2 has not been created yet and it has nothing to point to 
+  // so it will be undefined; 
+}; 
+
+
+function logThis() {
+  console.log(this);
+}
+//Yaha v this kisi object k inside nahi hai isiliye iske pas point karne ko kuchh v nahi hai.
+// isiliye ye v undefined.
+
+logThis(); 
+
+//Special feature of this we can use .call() niche dekho
+
+logThis.call('Hello'); //yaha pe hello aa jayega.
+
+// this keeps the value that it has outside the arrow function.
+
+this //dekho yaha pe undefined hai to niche wale function k andar v undefined rahega.
+const object3 ={
+  method: () => {
+    console.log(this)
+  }
+}
+
+object3.method(); //Undefined
+*/
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
