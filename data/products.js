@@ -933,6 +933,7 @@ export const products = [
 
 export let products = [];
 
+/*
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 
@@ -955,5 +956,67 @@ export function loadProducts(fun) {
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
+*/
 
-// loadProducts();
+//Now we will use fetch to send a http request which is a better way to send requests using promise.
+
+// ye sample hai fetch ka 
+
+/*
+function loadProductsFetch() {
+  
+  fetch('https://supersimplebackend.dev/products').then((response) =>{
+
+    return response.json()
+
+  }).then((productsData) => {
+
+    console.log(productsData);
+
+  });
+}
+loadProductsFetch();
+*/
+
+
+// by default fetch() will make a 'GET' request.
+// kya hota hai na ki jab ham fetch karte hai to backend me request jata hai and jab ham 
+// return response.json() kiye to data parse hoke hamare pas aaya 
+// or wo save ho gaya jo ki then me ham parameter k rup me de diye jo aage use hua 
+
+
+export function loadProductsFetch() {
+
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response) => {
+    return response.json();
+
+  }).then((productsData) => {
+
+    products = productsData.map((productDetails) => {
+
+      if(productDetails.type === 'clothing'){
+        return new Clothing(productDetails);
+      }
+
+      if(productDetails.type === 'appliances'){
+        return new Appliances(productDetails);
+      }
+
+      return new Product(productDetails);
+    });
+
+    console.log('load products');
+  });
+
+  return promise;
+}
+
+/*
+loadProductsFetch().then(() => {
+  console.log('Next Step')
+});
+
+// yaha hamlog dekhe ki we can add some more promise after fetch by returning the request.
+*/

@@ -1,6 +1,7 @@
 import { renderOrderSumary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
-import { loadProducts } from "../data/products.js";
+// import { loadProducts } from "../data/products.js"
+import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 // import '../data/cart-class.js';
 // import '../data/backend-practice.js'
@@ -77,6 +78,7 @@ import { loadCart } from "../data/cart.js";
 //yaha hamolg sab request k liye alag alag wait k rhe hai but chahe to sab k liye ek sath wiat kr sakte hai.
 //using promise.all() method;
 
+/*
 Promise.all([  //iske under array banake sare promise chala sakte hai.
   
   new Promise((resolve) => {
@@ -96,5 +98,18 @@ Promise.all([  //iske under array banake sare promise chala sakte hai.
   renderOrderSumary();
   renderPaymentSummary();
 })
-
+*/
 // agar iske resolve me v value dede to ye array of values return karega.
+
+Promise.all([
+  loadProductsFetch(),
+
+  new Promise((resolve) => {
+    loadCart(() => {
+      resolve();
+    });
+  })
+]).then(() => {
+  renderOrderSumary();
+  renderPaymentSummary();
+});
