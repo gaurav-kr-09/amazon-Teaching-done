@@ -144,7 +144,7 @@ async function loadPage() {
     // throw 'error2' // ye v error create kar dega and cart load nhi hoga.
 
     loadCart(() => {
-      reject('error3'); //isse bad me error create hoga.
+      // reject('error3'); //isse bad me error create hoga.
       resolve();
     });
 
