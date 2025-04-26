@@ -933,7 +933,7 @@ export const products = [
 
 export let products = [];
 
-/*
+
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 
@@ -956,7 +956,6 @@ export function loadProducts(fun) {
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
-*/
 
 //Now we will use fetch to send a http request which is a better way to send requests using promise.
 
