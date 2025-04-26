@@ -101,6 +101,7 @@ Promise.all([  //iske under array banake sare promise chala sakte hai.
 */
 // agar iske resolve me v value dede to ye array of values return karega.
 
+/*
 Promise.all([
   loadProductsFetch(),
 
@@ -113,3 +114,43 @@ Promise.all([
   renderOrderSumary();
   renderPaymentSummary();
 });
+*/
+
+//niche a  better and smaller way to write such codes.
+
+/*
+async function loadPage() {
+  console.log('load page');
+
+  await loadProductsFetch();
+
+  return 'value2'; //  ye resolve k under me jo value rhta hai na uske tarah kam karega.
+}
+
+loadPage().then((val) => {
+  console.log('next step');
+  console.log(val);
+});
+*/
+
+//upar wala sample code tha.
+
+async function loadPage() {
+
+  await loadProductsFetch();
+
+  await new Promise((resolve) => {
+    loadCart(() => {
+      resolve();
+    });
+  });
+
+  // await loadCart(() => {
+    
+  // });
+
+  renderOrderSumary();
+  renderPaymentSummary();
+}
+
+loadPage();
