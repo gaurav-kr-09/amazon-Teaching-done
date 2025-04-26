@@ -953,6 +953,10 @@ export function loadProducts(fun) {
     fun();
   });
 
+  xhr.addEventListener('error', (error) => {
+    console.log('unexpected error.\n Please Try Again later');
+  }) //callback wale me error handle krne k liye ek naya callback lagana parega.
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
@@ -1007,6 +1011,8 @@ export function loadProductsFetch() {
     });
 
     console.log('load products');
+  }).catch((error) => {
+    console.log('Unexpected error!\n Please try after some time')
   });
 
   return promise;

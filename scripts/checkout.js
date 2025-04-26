@@ -136,19 +136,28 @@ loadPage().then((val) => {
 //upar wala sample code tha.
 
 async function loadPage() {
+  try{
+    // throw 'error1' // iska error, niche wale catch k parameter me save hoga
+    await loadProductsFetch();
 
-  await loadProductsFetch();
+  await new Promise((resolve, reject) => {
+    // throw 'error2' // ye v error create kar dega and cart load nhi hoga.
 
-  await new Promise((resolve) => {
     loadCart(() => {
+      reject('error3'); //isse bad me error create hoga.
       resolve();
     });
+
   });
 
   // await loadCart(() => {
     
   // });
 
+  } catch (error) {
+    console.log('Unexpected error!\n Please try after some time')
+  }
+  
   renderOrderSumary();
   renderPaymentSummary();
 }
